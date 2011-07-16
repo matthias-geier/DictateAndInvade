@@ -51,7 +51,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=../function_API/dist/Release/GNU-Linux-x86/libfunction_API.so ../lua_static/liblua.a ../lua_framework/dist/Release/GNU-Linux-x86/liblua_framework.so
+LDLIBSOPTIONS=../function_API/dist/Release/GNU-Linux-x86/libfunction_API.so ../lua_framework/dist/Release/GNU-Linux-x86/liblua_framework.so ../sqlite3/dist/Release/GNU-Linux-x86/libsqlite3.so ../lua_static/liblua.a
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -59,9 +59,11 @@ LDLIBSOPTIONS=../function_API/dist/Release/GNU-Linux-x86/libfunction_API.so ../l
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/divide_and_conquer: ../function_API/dist/Release/GNU-Linux-x86/libfunction_API.so
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/divide_and_conquer: ../lua_static/liblua.a
-
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/divide_and_conquer: ../lua_framework/dist/Release/GNU-Linux-x86/liblua_framework.so
+
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/divide_and_conquer: ../sqlite3/dist/Release/GNU-Linux-x86/libsqlite3.so
+
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/divide_and_conquer: ../lua_static/liblua.a
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/divide_and_conquer: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}

@@ -35,6 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/sqlite3_framework.o \
+	${OBJECTDIR}/buildings.o \
 	${OBJECTDIR}/linked_list.o
 
 
@@ -52,11 +53,13 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=
+LDLIBSOPTIONS=../sqlite3/dist/Release/GNU-Linux-x86/libsqlite3.so
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libfunction_API.so
+
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libfunction_API.so: ../sqlite3/dist/Release/GNU-Linux-x86/libsqlite3.so
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libfunction_API.so: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
@@ -65,12 +68,17 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libfunction_API.so: ${OBJECTFILES}
 ${OBJECTDIR}/sqlite3_framework.o: sqlite3_framework.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.c) -g -I. -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/sqlite3_framework.o sqlite3_framework.c
+	$(COMPILE.c) -g -I. -I../sqlite3 -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/sqlite3_framework.o sqlite3_framework.c
+
+${OBJECTDIR}/buildings.o: buildings.c 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.c) -g -I. -I../sqlite3 -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/buildings.o buildings.c
 
 ${OBJECTDIR}/linked_list.o: linked_list.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.c) -g -I. -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/linked_list.o linked_list.c
+	$(COMPILE.c) -g -I. -I../sqlite3 -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/linked_list.o linked_list.c
 
 # Subprojects
 .build-subprojects:

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <linked_list.h>
+#include <sqlite3_framework.h>
 
 double my_test_number = 0;
 
@@ -33,12 +34,13 @@ int main(int argc, char** argv) {
     signal(SIGINT, signal_callback_handler);
     signal(SIGKILL, signal_callback_handler);
     
-    linked_list* llx = linked_list_create((void*)&x);
+    /*linked_list* llx = linked_list_create((void*)&x);
     linked_list_create_and_insert_after(llx, (void*)&y);
     linked_list_create_and_insert_after(llx, (void*)&z);
-    linked_list_for_all(llx, &list_callback);
+    linked_list_for_all(llx, &list_callback);*/
     
-    call_lua_stack();
+    //call_lua_stack();
+    test_db();
     
     return (EXIT_SUCCESS);
 }

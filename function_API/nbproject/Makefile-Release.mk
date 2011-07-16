@@ -35,6 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/sqlite3_framework.o \
+	${OBJECTDIR}/buildings.o \
 	${OBJECTDIR}/linked_list.o
 
 
@@ -68,6 +69,11 @@ ${OBJECTDIR}/sqlite3_framework.o: sqlite3_framework.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.c) -O2 -I. -I../sqlite3 -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/sqlite3_framework.o sqlite3_framework.c
+
+${OBJECTDIR}/buildings.o: buildings.c 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.c) -O2 -I. -I../sqlite3 -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/buildings.o buildings.c
 
 ${OBJECTDIR}/linked_list.o: linked_list.c 
 	${MKDIR} -p ${OBJECTDIR}
