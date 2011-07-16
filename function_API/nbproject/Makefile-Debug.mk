@@ -34,6 +34,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/sqlite3_framework.o \
 	${OBJECTDIR}/linked_list.o
 
 
@@ -60,6 +61,11 @@ LDLIBSOPTIONS=
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libfunction_API.so: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -shared -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libfunction_API.so -fPIC ${OBJECTFILES} ${LDLIBSOPTIONS} 
+
+${OBJECTDIR}/sqlite3_framework.o: sqlite3_framework.c 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.c) -g -I. -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/sqlite3_framework.o sqlite3_framework.c
 
 ${OBJECTDIR}/linked_list.o: linked_list.c 
 	${MKDIR} -p ${OBJECTDIR}
