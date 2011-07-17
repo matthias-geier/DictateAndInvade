@@ -3,6 +3,7 @@
 #include <signal.h>
 #include <linked_list.h>
 #include <sqlite3_framework.h>
+#include <buildings.h>
 
 double my_test_number = 0;
 
@@ -26,6 +27,8 @@ void list_callback(linked_list* meow) {
  * 
  */
 int main(int argc, char** argv) {
+    linked_list* list = NULL;
+    int status;
     int x = 1; int y = 28; int z = 23;
     
     // trap signals
@@ -40,7 +43,18 @@ int main(int argc, char** argv) {
     linked_list_for_all(llx, &list_callback);*/
     
     //call_lua_stack();
-    test_db();
+    
+    printf("list ptr before: %d\n", list);
+    status = building_get_all(&list);
+    printf("list ptr after: %d\n", list);
+    printf("Returned status: %d\n", status);
+    if (status == 0) {
+        linked_list* cur = list;
+        while(cur != NULL) {
+            building_print_details((building*)cur->value);
+            cur = cur->next;
+        }
+    }
     
     return (EXIT_SUCCESS);
 }

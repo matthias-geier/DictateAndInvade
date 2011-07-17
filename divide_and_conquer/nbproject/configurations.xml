@@ -42,12 +42,13 @@
             <pElem>../function_API</pElem>
             <pElem>../lua_static</pElem>
             <pElem>../lua_framework</pElem>
+            <pElem>../sqlite3</pElem>
           </incDir>
         </cTool>
         <linkerTool>
           <commandlineTool>g++</commandlineTool>
           <linkerLibItems>
-            <linkerLibFileItem>../function_API/dist/Release/GNU-Linux-x86/libfunction_API.so</linkerLibFileItem>
+            <linkerLibFileItem>../function_API/dist/Debug/GNU-Linux-x86/libfunction_API.so</linkerLibFileItem>
             <linkerLibFileItem>../lua_framework/dist/Release/GNU-Linux-x86/liblua_framework.so</linkerLibFileItem>
             <linkerLibFileItem>../sqlite3/dist/Release/GNU-Linux-x86/libsqlite3.so</linkerLibFileItem>
             <linkerLibFileItem>../lua_static/liblua.a</linkerLibFileItem>
@@ -57,12 +58,12 @@
         <requiredProjects>
           <makeArtifact PL="../function_API"
                         CT="2"
-                        CN="Release"
-                        AC="false"
+                        CN="Debug"
+                        AC="true"
                         BL="false"
                         WD="../function_API"
-                        BC="${MAKE}  -f Makefile CONF=Release"
-                        CC="${MAKE}  -f Makefile CONF=Release clean"
+                        BC="${MAKE}  -f Makefile CONF=Debug"
+                        CC="${MAKE}  -f Makefile CONF=Debug clean"
                         OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libfunction_API.so">
           </makeArtifact>
           <makeArtifact PL="../lua_framework"

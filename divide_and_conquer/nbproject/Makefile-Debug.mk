@@ -51,13 +51,13 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=../function_API/dist/Release/GNU-Linux-x86/libfunction_API.so ../lua_framework/dist/Release/GNU-Linux-x86/liblua_framework.so ../sqlite3/dist/Release/GNU-Linux-x86/libsqlite3.so ../lua_static/liblua.a
+LDLIBSOPTIONS=../function_API/dist/Debug/GNU-Linux-x86/libfunction_API.so ../lua_framework/dist/Release/GNU-Linux-x86/liblua_framework.so ../sqlite3/dist/Release/GNU-Linux-x86/libsqlite3.so ../lua_static/liblua.a
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/divide_and_conquer
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/divide_and_conquer: ../function_API/dist/Release/GNU-Linux-x86/libfunction_API.so
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/divide_and_conquer: ../function_API/dist/Debug/GNU-Linux-x86/libfunction_API.so
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/divide_and_conquer: ../lua_framework/dist/Release/GNU-Linux-x86/liblua_framework.so
 
@@ -72,7 +72,7 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/divide_and_conquer: ${OBJECTFILES}
 ${OBJECTDIR}/main.o: main.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.c) -g -I../function_API -I../lua_static -I../lua_framework -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.c
+	$(COMPILE.c) -g -I../function_API -I../lua_static -I../lua_framework -I../sqlite3 -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.c
 
 # Subprojects
 .build-subprojects:

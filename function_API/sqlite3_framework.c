@@ -53,7 +53,7 @@ int sql_loop_rows(void (*processor)(sqlite3_stmt*, void**), void** datastructure
 
 char* sql_generate_selectall_query(char* from, char* where) {
     char* query;
-    int total = 0;
+    int total = 1;
     
     total += strlen(SQL_STMT_SELECTALL);
     total += strlen(from);

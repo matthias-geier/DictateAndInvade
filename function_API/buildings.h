@@ -7,7 +7,7 @@
 
 struct type_building {
     int id;
-    unsigned char* name;
+    char* name;
     int lvl;
 };
 

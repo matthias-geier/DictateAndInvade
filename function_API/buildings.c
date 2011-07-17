@@ -16,9 +16,9 @@ void building_convert_stmt(sqlite3_stmt* stmt, void** datastructure) {
     printf("Entering building converter (datastructure %d, datafirst %d)\n", datastructure, datafirst);
     
     b->id = sqlite3_column_int(stmt, 0);
-    //name = sqlite3_column_text(stmt, 1);
-    strcpy(b->name, sqlite3_column_text(stmt, 1));
-    //b->name = name;
+    name = sqlite3_column_text(stmt, 1);
+    b->name = (char*)malloc(sizeof(char) * (strlen(name) + 1));
+    strcpy(b->name, name);
     b->lvl = sqlite3_column_int(stmt, 2);
     
     building_print_details(b);
