@@ -8,6 +8,8 @@
 
 #define SQL_STMT_COUNT          "SELECT count(*) FROM %s %s;"
 #define SQL_STMT_SELECTALL      "SELECT * FROM %s %s;"
+#define SQL_STMT_INSERT         "INSERT INTO %s %s VALUES %s;"
+#define SQL_STMT_UPDATE         "UPDATE %s SET %s WHERE %s;"
 
 #define SQL_TAB_PLAYER          "player"
 #define SQL_TAB_BUILDING        "buildings"
@@ -24,7 +26,7 @@ sqlite3_stmt* sql_statement;
  * the statement. the database can be opened for
  * read and write access.
  * 
- * @param querystring:  string to be executed
+ * @param *querystring: string to be executed
  * @param flag:         SQLITE_OPEN_READONLY or SQLITE_OPEN_READWRITE
  * @return:             status flag like SQLITE_OK
  */
@@ -59,7 +61,7 @@ int sql_retrieve_number(int* number);
  * the results to a given datastructure.
  * 
  * @param *processor:           function pointer to process the current row
- * @param *datastructure:       void pointer to the datastructure passed on to processor
+ * @param **datastructure:      void pointer to pointer to the datastructure passed on to processor
  * @returns:                    status flag like SQLITE_DONE
  */
 int sql_loop_rows(void (*processor)(sqlite3_stmt*, void**), void** datastructure);
@@ -68,12 +70,44 @@ int sql_loop_rows(void (*processor)(sqlite3_stmt*, void**), void** datastructure
 
 /*
  * insert parameters into select all query and return a pointer
+ * remember to free the query string!
  * 
  * @param *from:                from string
  * @param *where:               where string
  * @returns:                    char pointer to query
  */
 char* sql_generate_selectall_query(char* from, char* where);
+
+
+
+/*
+ * generates an insert query and returns a pointer
+ * remember to free the query string!
+ * 
+ * @param *into:                into string
+ * @param *columns:             columns string
+ * @param *values:              values string
+ * @returns:                    char pointer to query
+ */
+char* sql_generate_insert_query(char* into, char* columns, char* values);
+
+
+
+/*
+ * generates an update query and returns a pointer
+ * remember to free the query string!
+ * 
+ * @param *update:              update string
+ * @param *set:                 set string
+ * @param *where:               where string
+ * @returns:                    char pointer to query
+ */
+char* sql_generate_update_query(char* update, char* set, char* where);
+
+/*
+ * 
+ */
+int sql_insert_or_update_datastructure(char* (*processor)(void**), void** datastructure);
 
 
 #endif	/* SQLITE3_FRAMEWORK_H */

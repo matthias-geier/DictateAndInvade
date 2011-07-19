@@ -64,3 +64,41 @@ char* sql_generate_selectall_query(char* from, char* where) {
     
     return query;
 }
+
+char* sql_generate_insert_query(char* into, char* columns, char* values) {
+    char* query;
+    int total = 1;
+    
+    total += strlen(SQL_STMT_INSERT);
+    total += strlen(into);
+    total += strlen(columns);
+    total += strlen(values);
+    
+    query = (char*)malloc(sizeof(char) * total);
+    sprintf(query, SQL_STMT_INSERT, into, columns, values);
+    
+    return query;
+}
+
+char* sql_generate_update_query(char* update, char* set, char* where) {
+    char* query;
+    int total = 1;
+    
+    total += strlen(SQL_STMT_UPDATE);
+    total += strlen(update);
+    total += strlen(set);
+    total += strlen(where);
+    
+    query = (char*)malloc(sizeof(char) * total);
+    sprintf(query, SQL_STMT_UPDATE, update, set, where);
+    
+    return query;
+}
+
+int sql_insert_or_update_datastructure(char* (*processor)(void**), void** datastructure) {
+    int status = 0;
+    char* query = (*processor)(datastructure);
+    
+    sql_open_and_prepare(query, SQLITE_OPEN_READWRITE);
+    sql_finalize_and_close();
+}

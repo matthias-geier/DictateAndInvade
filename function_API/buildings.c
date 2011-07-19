@@ -47,6 +47,7 @@ int building_get_all(linked_list** list) {
     int status = 0;
     char* query = sql_generate_selectall_query(SQL_TAB_BUILDING, "");
     status = sql_open_and_prepare(query, SQLITE_OPEN_READONLY);
+    free(query);
     if (status != SQLITE_OK) {
         return status;
     }
@@ -64,4 +65,23 @@ int building_get_all(linked_list** list) {
 
 void building_print_details(building* b) {
     printf("Building (id: %d) %s is of Level %d\n", b->id, b->name, b->lvl);
+}
+
+char* building_insert_or_update(void** datastructure) {
+    int total = 1;
+    char* chunk1;
+    char* chunk2;
+    building* b = (building*)*datastructure;
+    
+    // do update
+    if (b->id > 1) {
+        total += strlen(building_column_names[0].value);
+        total += 1; // the equals
+        total += strlen(itoa(b->id));
+        sql_generate_update_query(SQL_TAB_BUILDING, chunk1, chunk2)
+    }
+    // do insert
+    else {
+        
+    }
 }
