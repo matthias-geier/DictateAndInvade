@@ -8,7 +8,7 @@
 
 #define SQL_STMT_COUNT          "SELECT count(*) FROM %s %s;"
 #define SQL_STMT_SELECTALL      "SELECT * FROM %s %s;"
-#define SQL_STMT_INSERT         "INSERT INTO %s %s VALUES %s;"
+#define SQL_STMT_INSERT         "INSERT INTO %s (%s) VALUES (%s);"
 #define SQL_STMT_UPDATE         "UPDATE %s SET %s WHERE %s;"
 
 #define SQL_TAB_PLAYER          "player"
@@ -40,7 +40,7 @@ int sql_open_and_prepare(const char* querystring, int flag);
  * 
  * @return:             status flag like SQLITE_OK
  */
-int sql_finalize_and_close();
+int sql_finalize_and_close(void);
 
 
 
@@ -49,9 +49,18 @@ int sql_finalize_and_close();
  * valuable when retrieving a total row count.
  * 
  * @param *number:      pointer where the number is written to
- * @returns:            status flag like SQLITE_DONE
+ * @return:             status flag like SQLITE_DONE
  */
 int sql_retrieve_number(int* number);
+
+
+
+/*
+ * do a simple step
+ * 
+ * @return:             status flag like SQLITE_DONE
+ */
+int sql_step(void);
 
 
 
@@ -62,7 +71,7 @@ int sql_retrieve_number(int* number);
  * 
  * @param *processor:           function pointer to process the current row
  * @param **datastructure:      void pointer to pointer to the datastructure passed on to processor
- * @returns:                    status flag like SQLITE_DONE
+ * @return:                     status flag like SQLITE_DONE
  */
 int sql_loop_rows(void (*processor)(sqlite3_stmt*, void**), void** datastructure);
 
@@ -74,7 +83,7 @@ int sql_loop_rows(void (*processor)(sqlite3_stmt*, void**), void** datastructure
  * 
  * @param *from:                from string
  * @param *where:               where string
- * @returns:                    char pointer to query
+ * @return:                     char pointer to query
  */
 char* sql_generate_selectall_query(char* from, char* where);
 
@@ -87,7 +96,7 @@ char* sql_generate_selectall_query(char* from, char* where);
  * @param *into:                into string
  * @param *columns:             columns string
  * @param *values:              values string
- * @returns:                    char pointer to query
+ * @return:                     char pointer to query
  */
 char* sql_generate_insert_query(char* into, char* columns, char* values);
 
@@ -100,12 +109,18 @@ char* sql_generate_insert_query(char* into, char* columns, char* values);
  * @param *update:              update string
  * @param *set:                 set string
  * @param *where:               where string
- * @returns:                    char pointer to query
+ * @return:                     char pointer to query
  */
 char* sql_generate_update_query(char* update, char* set, char* where);
 
 /*
+ * calls the processor function to generate either an insert or
+ * update query. executes the query with data from the provided
+ * datastructure
  * 
+ * @param *processor:           function pointer to transform the datastructure to a query
+ * @param **datastructure:      void pointer to pointer to the datastructure passed on to processor
+ * @return:                     status flag like SQLITE_DONE
  */
 int sql_insert_or_update_datastructure(char* (*processor)(void**), void** datastructure);
 

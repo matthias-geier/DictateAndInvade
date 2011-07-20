@@ -19,7 +19,7 @@ int sql_open_and_prepare(const char* querystring, int flag) {
     return status;
 }
 
-int sql_finalize_and_close() {
+int sql_finalize_and_close(void) {
     int status = 0;
     status = sqlite3_finalize(sql_statement);
     printf("SQL finalize status: %d\n", status);
@@ -38,6 +38,13 @@ int sql_retrieve_number(int* number) {
     while((status = sqlite3_step(sql_statement)) == SQLITE_ROW) {
         *number = sqlite3_column_int(sql_statement, 0);
     }
+    return status;
+}
+
+int sql_step(void) {
+    int status = 0;
+    status = sqlite3_step(sql_statement);
+    printf("SQL step status: %d\n", status);
     return status;
 }
 
@@ -98,7 +105,16 @@ char* sql_generate_update_query(char* update, char* set, char* where) {
 int sql_insert_or_update_datastructure(char* (*processor)(void**), void** datastructure) {
     int status = 0;
     char* query = (*processor)(datastructure);
-    
-    sql_open_and_prepare(query, SQLITE_OPEN_READWRITE);
-    sql_finalize_and_close();
+    status = sql_open_and_prepare(query, SQLITE_OPEN_READWRITE);
+    free(query);
+    if (status != SQLITE_OK) {
+        return status;
+    }
+    status = sql_step();
+    printf("bla bla %d\n", status);
+    if (status != SQLITE_DONE) {
+        return status;
+    }
+    status = sql_finalize_and_close();
+    return status;
 }

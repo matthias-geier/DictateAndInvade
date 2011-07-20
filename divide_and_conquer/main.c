@@ -28,6 +28,7 @@ void list_callback(linked_list* meow) {
  */
 int main(int argc, char** argv) {
     linked_list* list = NULL;
+    building* b;
     int status;
     int x = 1; int y = 28; int z = 23;
     
@@ -55,6 +56,16 @@ int main(int argc, char** argv) {
             cur = cur->next;
         }
     }
+    b = (building*)list->value;
+    b->lvl = b->lvl + 25;
+    sql_insert_or_update_datastructure(&building_insert_or_update_query, (void**)&b);
+    
+    b = (building*)malloc(sizeof(building));
+    b->id = 0;
+    b->name = (char*)malloc(sizeof(char) * 10);
+    b->name = "keksekekse";
+    b->lvl = 25;
+    sql_insert_or_update_datastructure(&building_insert_or_update_query, (void**)&b);
     
     return (EXIT_SUCCESS);
 }
