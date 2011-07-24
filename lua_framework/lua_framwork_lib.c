@@ -1,11 +1,5 @@
 
-#include <stdio.h>
 #include <lua_framwork_lib.h>
-#include <lua.h>
-#include <lauxlib.h>
-#include <lualib.h>
-
-#include "lua_transform_array.h"
 
 int set_test_num(lua_State *L) {
     double d = luaL_checknumber(L, 1);

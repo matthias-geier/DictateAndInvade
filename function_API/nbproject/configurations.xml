@@ -5,6 +5,7 @@
                    displayName="Header Files"
                    projectFiles="true">
       <itemPath>buildings.h</itemPath>
+      <itemPath>core.h</itemPath>
       <itemPath>linked_list.h</itemPath>
       <itemPath>sqlite3_framework.h</itemPath>
       <itemPath>string_s.h</itemPath>
@@ -17,6 +18,7 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>buildings.c</itemPath>
+      <itemPath>core.c</itemPath>
       <itemPath>linked_list.c</itemPath>
       <itemPath>sqlite3_framework.c</itemPath>
     </logicalFolder>

@@ -1,9 +1,8 @@
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <sqlite3_framework.h>
 
+sqlite3* sql_struct;
+sqlite3_stmt* sql_statement;
 
 int sql_open_and_prepare(const char* querystring, int flag) {
     int status = 0;
@@ -66,7 +65,7 @@ char* sql_generate_selectall_query(char* from, char* where) {
     total += strlen(from);
     total += strlen(where);
     
-    query = (char*)malloc(sizeof(char) * total);
+    query = (char*)core_malloc(sizeof(char) * total);
     sprintf(query, SQL_STMT_SELECTALL, from, where);
     
     return query;
@@ -81,7 +80,7 @@ char* sql_generate_insert_query(char* into, char* columns, char* values) {
     total += strlen(columns);
     total += strlen(values);
     
-    query = (char*)malloc(sizeof(char) * total);
+    query = (char*)core_malloc(sizeof(char) * total);
     sprintf(query, SQL_STMT_INSERT, into, columns, values);
     
     return query;
@@ -96,7 +95,7 @@ char* sql_generate_update_query(char* update, char* set, char* where) {
     total += strlen(set);
     total += strlen(where);
     
-    query = (char*)malloc(sizeof(char) * total);
+    query = (char*)core_malloc(sizeof(char) * total);
     sprintf(query, SQL_STMT_UPDATE, update, set, where);
     
     return query;
@@ -106,7 +105,7 @@ int sql_insert_or_update_datastructure(char* (*processor)(void**), void** datast
     int status = 0;
     char* query = (*processor)(datastructure);
     status = sql_open_and_prepare(query, SQLITE_OPEN_READWRITE);
-    free(query);
+    core_free(query);
     if (status != SQLITE_OK) {
         return status;
     }

@@ -1,10 +1,5 @@
 
-#include <stdlib.h>
-#include <stdio.h>
 #include <buildings.h>
-#include <sqlite3_framework.h>
-#include <sqlite3.h>
-#include <string.h>
 
 
 void building_convert_stmt(sqlite3_stmt* stmt, void** datastructure) {
@@ -12,12 +7,12 @@ void building_convert_stmt(sqlite3_stmt* stmt, void** datastructure) {
     linked_list* current;
     linked_list* latest;
     linked_list* datafirst = (linked_list*)(*datastructure);
-    building* b = (building*)malloc(sizeof(building));
+    building* b = (building*)core_malloc(sizeof(building));
     printf("Entering building converter (datastructure %d, datafirst %d)\n", datastructure, datafirst);
     
     b->id = sqlite3_column_int(stmt, 0);
     name = sqlite3_column_text(stmt, 1);
-    b->name = (char*)malloc(sizeof(char) * (strlen(name) + 1));
+    b->name = (char*)core_malloc(sizeof(char) * (strlen(name) + 1));
     strcpy(b->name, name);
     b->lvl = sqlite3_column_int(stmt, 2);
     
@@ -47,7 +42,7 @@ int building_get_all(linked_list** list) {
     int status = 0;
     char* query = sql_generate_selectall_query(SQL_TAB_BUILDING, "");
     status = sql_open_and_prepare(query, SQLITE_OPEN_READONLY);
-    free(query);
+    core_free(query);
     if (status != SQLITE_OK) {
         return status;
     }
@@ -79,18 +74,18 @@ char* building_insert_or_update_query(void** datastructure) {
     // do update
     if (b->id > 0) {
         // fill chunk2 with where string
-        num = (char*)malloc(sizeof(char) * 11);
+        num = (char*)core_malloc(sizeof(char) * 11);
         snprintf(num, 10, "%d", b->id);
         total += strlen(building_column_names[0].value);
         total += 1; // the equals
         total += strlen(num);
-        chunk2 = (char*)malloc(sizeof(char) * total);
+        chunk2 = (char*)core_malloc(sizeof(char) * total);
         sprintf(chunk2, "%s=%s", building_column_names[0].value, num);
         printf("chunk2 (len %d): %s\n", strlen(chunk2), chunk2);
-        free(num);
+        core_free(num);
         
         // fill chunk1 with set string
-        num = (char*)malloc(sizeof(char) * 11);
+        num = (char*)core_malloc(sizeof(char) * 11);
         snprintf(num, 10, "%d", b->lvl);
         total = 1;
         total += strlen(num);
@@ -103,26 +98,26 @@ char* building_insert_or_update_query(void** datastructure) {
         total += strlen(b->name);
         total += 2; // high commata for name
         total += 2; // equals twice
-        chunk1 = (char*)malloc(sizeof(char) * total);
+        chunk1 = (char*)core_malloc(sizeof(char) * total);
         sprintf(chunk1, "%s=\"%s\", %s=%s", building_column_names[1].value, b->name, building_column_names[2].value, num);
         printf("chunk1 (len %d): %s\n", strlen(chunk1), chunk1);
-        free(num);
+        core_free(num);
         
         query = sql_generate_update_query(SQL_TAB_BUILDING, chunk1, chunk2);
     }
     // do insert
     else {
         // fill chunk2 with values string
-        num = (char*)malloc(sizeof(char) * 11);
+        num = (char*)core_malloc(sizeof(char) * 11);
         snprintf(num, 10, "%d", b->lvl);
         total += strlen(b->name);
         total += 2; // comma + space
         total += 2; // high commata for name
         total += strlen(num);
-        chunk2 = (char*)malloc(sizeof(char) * total);
+        chunk2 = (char*)core_malloc(sizeof(char) * total);
         sprintf(chunk2, "\"%s\", %s", b->name, num);
         printf("chunk2 (len %d): %s\n", strlen(chunk2), chunk2);
-        free(num);
+        core_free(num);
         
         // fill chunk1 with columns string
         total = 1;
@@ -132,13 +127,19 @@ char* building_insert_or_update_query(void** datastructure) {
                 total += 2; //add comma + space when having more than one entry
             }
         }
-        chunk1 = (char*)malloc(sizeof(char) * total);
+        chunk1 = (char*)core_malloc(sizeof(char) * total);
         sprintf(chunk1, "%s, %s", building_column_names[1].value, building_column_names[2].value);
         printf("chunk1 (len %d): %s\n", strlen(chunk1), chunk1);
         
         query = sql_generate_insert_query(SQL_TAB_BUILDING, chunk1, chunk2);
     }
-    free(chunk1);
-    free(chunk2);
+    core_free(chunk1);
+    core_free(chunk2);
     return query;
+}
+
+void building_destroy(void** ptr){
+    building* b = (building*)(*ptr);
+    core_free(b->name);
+    core_free(b);
 }

@@ -1,8 +1,4 @@
 
-#include <stdlib.h>
-#include <lua.h>
-#include <lauxlib.h>
-#include <lualib.h>
 #include <lua_transform_array.h>
 
 double* lua_transform_array_to_num(lua_State* L, int stack_pos, int* size) {
@@ -10,7 +6,7 @@ double* lua_transform_array_to_num(lua_State* L, int stack_pos, int* size) {
     double* ptr;
     *size = luaL_getn(L, stack_pos);
     printf("Got Size: %d\n", *size);
-    double* array = (double*)malloc(sizeof(double) * (*size));
+    double* array = (double*)core_malloc(sizeof(double) * (*size));
     for (i = 0; i < *size; i++) {
         ptr = array + sizeof(double) * i;
         lua_rawgeti(L, stack_pos, i);
@@ -29,7 +25,7 @@ int lua_transform_num_to_array(lua_State* L, double* array, int* size) {
         ptr = array + sizeof(double) * i;
         lua_pushnumber(L, *ptr);
         lua_rawseti(L, -2, i);
-        free(ptr);
+        core_free(ptr);
     }
     *size = 0;
     return lua_gettop(L);

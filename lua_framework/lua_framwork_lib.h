@@ -2,6 +2,11 @@
 #ifndef LUA_FRAMEWORK_LIB_H
 #define	LUA_FRAMEWORK_LIB_H
 
+#include <lua.h>
+#include <lauxlib.h>
+#include <lualib.h>
+#include <stdio.h>
+#include "lua_transform_array.h"
 #include <lauxlib.h>
 
 

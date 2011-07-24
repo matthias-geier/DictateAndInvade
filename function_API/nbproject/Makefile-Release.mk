@@ -36,7 +36,8 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/sqlite3_framework.o \
 	${OBJECTDIR}/buildings.o \
-	${OBJECTDIR}/linked_list.o
+	${OBJECTDIR}/linked_list.o \
+	${OBJECTDIR}/core.o
 
 
 # C Compiler Flags
@@ -79,6 +80,11 @@ ${OBJECTDIR}/linked_list.o: linked_list.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.c) -O2 -I. -I../sqlite3 -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/linked_list.o linked_list.c
+
+${OBJECTDIR}/core.o: core.c 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.c) -O2 -I. -I../sqlite3 -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/core.o core.c
 
 # Subprojects
 .build-subprojects:

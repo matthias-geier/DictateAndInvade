@@ -2,6 +2,10 @@
 #ifndef SQLITE3_FRAMEWORK_H
 #define	SQLITE3_FRAMEWORK_H
 
+#include <core.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <sqlite3.h>
 
 #define SQLITE3FILE             "db.sqlite"
@@ -18,8 +22,8 @@
 /*
  * global sql variables for sqlite3 transactions
  */
-sqlite3* sql_struct;
-sqlite3_stmt* sql_statement;
+extern sqlite3* sql_struct;
+extern sqlite3_stmt* sql_statement;
 
 /*
  * opens a connection to the database and prepares

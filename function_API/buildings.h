@@ -2,6 +2,10 @@
 #ifndef BUILDINGS_H
 #define	BUILDINGS_H
 
+#include <core.h>
+#include <stdio.h>
+#include <sqlite3_framework.h>
+#include <string.h>
 #include <sqlite3.h>
 #include <linked_list.h>
 #include <string_s.h>
@@ -56,6 +60,15 @@ void building_print_details(building* b);
  * @return:                     pointer to char array holding the query
  */
 char* building_insert_or_update_query(void** datastructure);
+
+
+
+/*
+ * destroy a building including the allocated pointers
+ * 
+ * @param **ptr:           void pointer to pointer of the building struct
+ */
+void building_destroy(void** ptr);
 
 
 #endif	/* BUILDINGS_H */

@@ -60,13 +60,25 @@ int main(int argc, char** argv) {
     b->lvl = b->lvl + 25;
     sql_insert_or_update_datastructure(&building_insert_or_update_query, (void**)&b);
     
-    b = (building*)malloc(sizeof(building));
+    b = (building*)core_malloc(sizeof(building));
     b->id = 0;
-    b->name = (char*)malloc(sizeof(char) * 10);
-    b->name = "keksekekse";
+    b->name = (char*)core_malloc(sizeof(char) * 10);
+    printf("b->name ptr: %d\n", b->name);
+    strcpy(b->name, "keksekekse");
+    printf("b->name ptr: %d\n", b->name);
     b->lvl = 25;
     sql_insert_or_update_datastructure(&building_insert_or_update_query, (void**)&b);
     
+    if (status == 0) {
+        linked_list* cur = list;
+        while(cur != NULL) {
+            cur = linked_list_destroy(cur, &building_destroy);
+        }
+    }
+    
+    building_destroy((void**)&b);
+    
+    sleep(5);
     return (EXIT_SUCCESS);
 }
 
